@@ -17,7 +17,7 @@ function bytes(path){const a=assets[path];if(!a)throw new Error('Missing pass as
 const intermediate=()=>new TextDecoder().decode(bytes('/wallet/wwdr.pem'));
 async function identity(env){const obj=await env.BUCKET.get(CONFIG);return obj?unseal(await obj.text(),env.WALLET_VAULT_KEY):null}
 function passResponse(value,name){return new Response(value,{headers:{'content-type':'application/vnd.apple.pkpass','content-disposition':'attachment; filename="'+name+'.pkpass"','cache-control':'private, no-store','x-content-type-options':'nosniff'}})}
-function signedPass(id,round,origin){return createPass({identity:id,intermediatePem:intermediate(),round,origin,images:{'icon.png':bytes('/wallet/icon.png'),'icon@2x.png':bytes('/wallet/icon@2x.png'),'icon@3x.png':bytes('/wallet/icon@3x.png'),'logo.png':bytes('/wallet/logo.png'),'logo@2x.png':bytes('/wallet/logo@2x.png'),'logo@3x.png':bytes('/wallet/logo@3x.png'),'strip.png':bytes('/wallet/strip.png'),'strip@2x.png':bytes('/wallet/strip@2x.png')}})}
+function signedPass(id,round,origin){return createPass({identity:id,intermediatePem:intermediate(),round,origin,images:{'icon.png':bytes('/wallet/icon.png'),'icon@2x.png':bytes('/wallet/icon@2x.png'),'icon@3x.png':bytes('/wallet/icon@3x.png'),'logo.png':bytes('/wallet/logo.png'),'logo@2x.png':bytes('/wallet/logo@2x.png'),'logo@3x.png':bytes('/wallet/logo@3x.png')}})}
 async function handle(req,env){try{
  const url=new URL(req.url),path=url.pathname;
  if(req.method==='POST'&&req.headers.get('Origin')!==url.origin)return json({error:'This request must come from the same site.'},403);
