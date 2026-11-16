@@ -34,11 +34,14 @@ const memoryPasses = new Map();
 let cachedEncryptedIdentity = null;
 
 function readWalletAsset(filename) {
+  const p = path.join(ROOT_DIR, 'wallet-assets', filename);
+  if (fs.existsSync(p)) {
+    return new Uint8Array(fs.readFileSync(p));
+  }
   if (EMBEDDED_WALLET_ASSETS[filename]) {
     return fromBase64(EMBEDDED_WALLET_ASSETS[filename]);
   }
-  const p = path.join(ROOT_DIR, 'wallet-assets', filename);
-  return new Uint8Array(fs.readFileSync(p));
+  throw new Error('Missing wallet asset: ' + filename);
 }
 
 function getIntermediatePem() {
@@ -172,6 +175,11 @@ function buildSignedPass(id, round, origin) {
       'icon.png': readWalletAsset('icon.png'),
       'icon@2x.png': readWalletAsset('icon@2x.png'),
       'icon@3x.png': readWalletAsset('icon@3x.png'),
+      'logo.png': readWalletAsset('logo.png'),
+      'logo@2x.png': readWalletAsset('logo@2x.png'),
+      'logo@3x.png': readWalletAsset('logo@3x.png'),
+      'strip.png': readWalletAsset('strip.png'),
+      'strip@2x.png': readWalletAsset('strip@2x.png'),
     },
   });
 }
