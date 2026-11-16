@@ -1,0 +1,13 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.mjs": {
+      "includeFiles": "wallet-assets/**"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index?__path=/api/$1" },
+    { "source": "/admin/wallet", "destination": "/api/index?__path=/admin/wallet" }
+  ]
+}
